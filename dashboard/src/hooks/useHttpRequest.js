@@ -14,7 +14,7 @@ const useHttpRequest = () => {
       headers = { "Content-Type": "application/json" },
       config
     ) => {
-      const API = `http://13.201.75.91/api/${url}`;
+      const API = `${process.env.REACT_APP_API_URL}/${url}`;
 
       setIsLoading(true);
       setError(null);

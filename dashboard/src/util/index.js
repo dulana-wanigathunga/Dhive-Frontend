@@ -7,7 +7,7 @@ import {
 } from "firebase/storage";
 import { app } from "./firebase";
 
-export const API_URI = "http://localhost:8800";
+export const API_URI = process.env.REACT_APP_API_URL;
 
 export const uploadFile = (setFileURL, file, setIsFileUploaded) => {
   const storage = getStorage(app);

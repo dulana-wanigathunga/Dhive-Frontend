@@ -46,7 +46,7 @@ const Header = () => {
     { path: "/", link: "Home" },
     { path: "/about", link: "About" },
     {
-      path: "http://dihive-dashboard.s3-website.ap-south-1.amazonaws.com",
+      path: process.env.REACT_APP_DASHBOARD_URL,
       link: `${
         user && user.accountType === "Writer" ? "Dashboard " : "Write article ?"
       }`,
