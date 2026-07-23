@@ -18,6 +18,8 @@ import ExpireImage from "./assets/session-expire.png";
 import AboutPage from "./pages/AboutPage";
 import PrivateRoute from "./components/PrivateRoute";
 
+console.log("make this running)");
+
 const router = createBrowserRouter([
   {
     index: true,
