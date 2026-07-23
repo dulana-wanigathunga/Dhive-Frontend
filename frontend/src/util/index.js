@@ -1,61 +1,45 @@
-import {
-  deleteObject,
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
-import { app } from "./firebase";
+import axios from "axios";
+
+// Cloudinary (unsigned upload) — replaces Firebase Storage.
+// These values are public by design for client-side unsigned uploads.
+const CLOUDINARY_CLOUD_NAME = "dolymlrl5";
+const CLOUDINARY_UPLOAD_PRESET = "ml_default";
 
 export const uploadFile = (setFileURL, file, setIsFileUploaded) => {
-  const storage = getStorage(app);
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
 
-  const name = new Date().getTime() + file.name;
-  const storageRef = ref(storage, name);
-
-  const uploadTask = uploadBytesResumable(storageRef, file);
-
-  uploadTask.on(
-    "state_changed",
-    (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      setIsFileUploaded(progress);
-      console.log("Upload is " + progress + "% done");
-
-      // eslint-disable-next-line default-case
-      switch (snapshot.state) {
-        case "paused":
-          console.log("Upload is paused");
-          break;
-        case "running":
-          console.log("Upload is running");
-          break;
+  axios
+    .post(
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+      formData,
+      {
+        onUploadProgress: (event) => {
+          if (event.total) {
+            const progress = (event.loaded / event.total) * 100;
+            setIsFileUploaded(progress);
+            console.log("Upload is " + progress + "% done");
+          }
+        },
       }
-    },
-    (error) => {
-      console.log(error);
-      setIsFileUploaded(0);
-    },
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log("Successfully uploaded");
-        setFileURL(downloadURL);
-        setIsFileUploaded(100);
-      });
-    }
-  );
-};
-
-export const deleteFile = (fileURL) => {
-  const storage = getStorage(app);
-  const fileRef = ref(storage, fileURL);
-  return deleteObject(fileRef)
-    .then(() => {
-      console.log("File deleted successfully");
+    )
+    .then((res) => {
+      console.log("Successfully uploaded");
+      setFileURL(res.data.secure_url);
+      setIsFileUploaded(100);
     })
     .catch((error) => {
-      console.log("Error deleting file:", error);
+      console.log(error);
+      setIsFileUploaded(0);
     });
+};
+
+// Cloudinary can't be securely deleted from the browser (needs a signed,
+// server-side request), so this is a no-op. Replaced images simply remain
+// in Cloudinary unreferenced.
+export const deleteFile = (fileURL) => {
+  return Promise.resolve();
 };
 
 export function formatNumber(num) {
