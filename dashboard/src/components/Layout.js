@@ -27,6 +27,7 @@ import fb from "../assets/fb.png";
 import insta from "../assets/insta.png";
 import twitter from "../assets/twitter.png";
 import logo from "../assets/Logo.png";
+import { DEFAULT_AVATAR, onImageError } from "../util";
 
 const UserMenu = ({ user, theme }) => {
   const dispatch = useDispatch();
@@ -78,7 +79,11 @@ const UserMenu = ({ user, theme }) => {
           aria-expanded={open ? "true" : undefined}
         >
           {user.image ? (
-            <Avatar className=" size-9 xs:size-11" src={user.image} />
+            <Avatar
+              className=" size-9 xs:size-11"
+              src={user.image || DEFAULT_AVATAR}
+              imgProps={{ onError: onImageError }}
+            />
           ) : (
             <Avatar className="size-11">{initials}</Avatar>
           )}

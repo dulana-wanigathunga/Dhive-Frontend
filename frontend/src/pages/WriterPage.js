@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { formatNumber } from "../util/index";
 import NoProfile from "../assets/profile.png";
+import { onImageError } from "../util";
 import Button from "../components/Button";
 import { FaUserCheck } from "react-icons/fa";
 import { WritersBlog } from "../components/WritersBlog";
@@ -80,6 +81,7 @@ const WriterPage = () => {
         <div className="w-full md:h-60 flex  flex-col gap-5 items-center md:flex-row bg-slate-900 dark:bg-gradient-to-r from-[#020b19] via-[#071b3e] to-[#020b19] mt-5 mb-10 rounded-md p-5 md:px-20">
           <img
             src={writer?.image || NoProfile}
+            onError={onImageError}
             alt="Writer"
             className="w-48 h-48 rounded-full border-4 border-slate-400 object-cover"
           />

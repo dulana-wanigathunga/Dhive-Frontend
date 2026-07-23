@@ -16,6 +16,7 @@ import { Box, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import LoadingSpinner from "./LoadingSpinner";
 import Button from "../components/Button";
 import { FaUser } from "react-icons/fa";
+import { DEFAULT_AVATAR, onImageError } from "../util";
 
 const Header = () => {
   const { user, isDarkMode, isLoading } = useSelector((state) => state.user);
@@ -124,7 +125,8 @@ const Header = () => {
                 <Avatar
                   alt="User Avatar"
                   className="size-9 xs:size-11"
-                  src={user.image}
+                  src={user.image || DEFAULT_AVATAR}
+                  imgProps={{ onError: onImageError }}
                 />
               </StyledBadge>
             ) : (
@@ -293,7 +295,8 @@ const Header = () => {
                           <Avatar
                             alt="User Avatar"
                             className="size-14"
-                            src={user.image}
+                            src={user.image || DEFAULT_AVATAR}
+                            imgProps={{ onError: onImageError }}
                           />
                         </StyledBadge>
                       ) : (

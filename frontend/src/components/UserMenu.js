@@ -6,6 +6,7 @@ import Badge from "@mui/material/Badge";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../store/userSlice";
 import { CiLogout } from "react-icons/ci";
+import { DEFAULT_AVATAR, onImageError } from "../util";
 
 const UserMenu = ({ user }) => {
   const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -81,7 +82,8 @@ const UserMenu = ({ user }) => {
               <Avatar
                 alt="User Avatar"
                 className="size-9 xs:size-11"
-                src={user.image}
+                src={user.image || DEFAULT_AVATAR}
+                imgProps={{ onError: onImageError }}
               />
             </StyledBadge>
           ) : (

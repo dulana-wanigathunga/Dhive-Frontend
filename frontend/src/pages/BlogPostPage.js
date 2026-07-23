@@ -5,6 +5,7 @@ import Layout from "../components/Layout";
 import PostComments from "../components/PostComments";
 import PostRequests from "../apis/postApi";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { DEFAULT_AVATAR, onImageError } from "../util";
 
 const BlogPostPage = () => {
   const { getPost, isLoading, getComments } = PostRequests();
@@ -59,7 +60,7 @@ const BlogPostPage = () => {
           <img
             src={post?.img}
             alt={post?.title}
-            className="w-full h-auto max-h-[460px]   xl:w-full rounded 2xl:object-none object-cover mb-8"
+            className="w-full h-[300px] md:h-[460px] object-cover object-center rounded mb-8"
           />
           <div className="w-full  flex flex-col gap-5">
             <h1 className="text-3xl md:text-5xl font-bold text-slate-800 dark:text-white ">
@@ -83,7 +84,8 @@ const BlogPostPage = () => {
               className="flex gap-3 items-center"
             >
               <img
-                src={post?.user?.image}
+                src={post?.user?.image || DEFAULT_AVATAR}
+                onError={onImageError}
                 alt={post?.user?.name}
                 className="object-cover w-12 h-12 rounded-full"
               />

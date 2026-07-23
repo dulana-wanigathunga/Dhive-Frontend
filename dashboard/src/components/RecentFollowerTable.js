@@ -10,7 +10,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { formatNumber, getInitials } from "../util/index";
+import { formatNumber, getInitials, DEFAULT_AVATAR, onImageError } from "../util/index";
 import moment from "moment";
 
 export const RecentFollowerTable = ({ data, theme }) => {
@@ -42,7 +42,11 @@ export const RecentFollowerTable = ({ data, theme }) => {
                   className="flex gap-2 items-center"
                 >
                   {follower?.image ? (
-                    <Avatar src={follower.image} alt={follower.name} />
+                    <Avatar
+                      src={follower.image || DEFAULT_AVATAR}
+                      imgProps={{ onError: onImageError }}
+                      alt={follower.name}
+                    />
                   ) : (
                     <Avatar>{getInitials(follower.name)}</Avatar>
                   )}

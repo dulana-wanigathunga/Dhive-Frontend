@@ -1,4 +1,13 @@
 import axios from "axios";
+import profileFallback from "../assets/profile.png";
+
+// Default avatar shown when a user/profile image is missing or fails to load
+// (e.g. old dead Firebase URLs). Use both as a src fallback and via onImageError.
+export const DEFAULT_AVATAR = profileFallback;
+export const onImageError = (e) => {
+  e.currentTarget.onerror = null; // prevent loops if the fallback itself fails
+  e.currentTarget.src = profileFallback;
+};
 
 // Cloudinary (unsigned upload) — replaces Firebase Storage.
 // These values are public by design for client-side unsigned uploads.

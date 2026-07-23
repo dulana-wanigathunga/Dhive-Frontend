@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setOpenComments } from "../store/commentsSlice";
 import useHttpRequest from "../hooks/useHttpRequest";
 import LoadingSpinner from "./LoadingSpinner";
+import { DEFAULT_AVATAR, onImageError } from "../util";
 
 const Comments = () => {
   const { openComment, commentId } = useSelector((state) => state.comments);
@@ -71,7 +72,8 @@ const Comments = () => {
           {commentsData.map(({ _id, user, comment, createdAt }) => (
             <div key={_id} className="flex gap-4">
               <img
-                src={user?.image}
+                src={user?.image || DEFAULT_AVATAR}
+                onError={onImageError}
                 alt="Profile"
                 className="w-10 h-10 rounded-full object-cover"
               />

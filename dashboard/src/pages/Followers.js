@@ -16,7 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import useHttpRequest from "../hooks/useHttpRequest";
-import { formatNumber, getInitials, updateURL } from "../util";
+import { formatNumber, getInitials, updateURL, DEFAULT_AVATAR, onImageError } from "../util";
 import moment from "moment";
 import { setFollowerData } from "../store/followerSlice";
 
@@ -97,7 +97,8 @@ const Followers = () => {
                 <TableCell className="flex gap-2 items-center">
                   {followerId.image ? (
                     <Avatar
-                      src={followerId.image}
+                      src={followerId.image || DEFAULT_AVATAR}
+                      imgProps={{ onError: onImageError }}
                       alt={followerId.name}
                       className="w-10 h-10 rounded-full object-cover"
                     />

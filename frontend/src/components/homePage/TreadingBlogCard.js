@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { usePopularPosts } from "../../hooks/postHook";
 import LoadingSpinner from "../LoadingSpinner";
+import { DEFAULT_AVATAR, onImageError } from "../../util";
 
 const TreadingBlogCard = () => {
   const { popularPosts, isLoading } = usePopularPosts();
@@ -55,7 +56,8 @@ const TreadingBlogCard = () => {
                   <div className="flex items-center w-full lg:gap-2 gap-3">
                     <img
                       className="rounded-full object-cover h-8 w-8 xl:h-6 xl:w-6"
-                      src={user.image}
+                      src={user.image || DEFAULT_AVATAR}
+                      onError={onImageError}
                       alt="profile"
                     />
                     <p className="text-white">{user.name}</p>

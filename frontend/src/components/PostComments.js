@@ -6,6 +6,7 @@ import PostRequests from "../apis/postApi";
 import LoadingSpinner from "./LoadingSpinner";
 import Button from "./Button";
 import Profile from "../assets/profile.png";
+import { onImageError } from "../util";
 import ConfirmationModal from "./ConfirmationModal";
 
 const PostComments = ({ postId, comments, callGetComments }) => {
@@ -132,6 +133,7 @@ const PostComments = ({ postId, comments, callGetComments }) => {
             <div key={el?._id} className="w-full flex gap-4 items-start">
               <img
                 src={el?.user?.image || Profile}
+                onError={onImageError}
                 alt={el?.user?.name}
                 className="w-10 h-10 rounded-full"
               />
