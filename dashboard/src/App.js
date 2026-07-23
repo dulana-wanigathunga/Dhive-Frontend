@@ -25,6 +25,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "./store/userSlice";
 import MessageModal from "./components/MessageModal";
 
+console.log("this is runing");
+
 export const theme = createTheme({
   typography: {
     fontFamily: "Poppins, sans-serif",
